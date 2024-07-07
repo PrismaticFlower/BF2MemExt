@@ -10,3 +10,6 @@
 /// @param to The path to move the file to.
 /// @return If moving the file succeeded or not.
 [[nodiscard]] bool move_file(const char* from, const char* to);
+
+/// @brief Call AttachConsole and initialize the CRT's stdio.
+void init_cstdio();

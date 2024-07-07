@@ -2,6 +2,7 @@
 //
 
 #include "apply_patches.hpp"
+#include "file_helpers.hpp"
 #include "gui.hpp"
 
 #include <stdio.h>
@@ -12,7 +13,10 @@ int main(int arg_count, const char** args)
    if (arg_count == 1) {
       return show_gui();
    }
-   else if (arg_count != 2 or strcmp(args[1], "/?") == 0) {
+
+   init_cstdio();
+
+   if (arg_count != 2 or strcmp(args[1], "/?") == 0) {
       printf("Usage: <file>\r\n");
 
       return 1;

@@ -1,11 +1,14 @@
 #pragma warning(disable : 4530)
 
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
+#include <fcntl.h>
+#include <io.h>
 
 [[nodiscard]] char* aquire_temp_file(const char* base_file_path, const char* prefix)
 {
@@ -49,4 +52,14 @@
 [[nodiscard]] bool move_file(const char* from, const char* to)
 {
    return MoveFileExA(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED) != 0;
+}
+
+void init_cstdio()
+{
+   if (not AttachConsole(ATTACH_PARENT_PROCESS)) return;
+
+   FILE* file = nullptr;
+   freopen_s(&file, "CONIN$", "r", stdin);
+   freopen_s(&file, "CONOUT$", "w", stdout);
+   freopen_s(&file, "CONOUT$", "w", stderr);
 }
