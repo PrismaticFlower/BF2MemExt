@@ -1,67 +1,26 @@
 // BF2MemExt.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include "exe_patcher.hpp"
-#include "patch_table.hpp"
+#include "apply_patches.hpp"
+#include "gui.hpp"
 
 #include <stdio.h>
+#include <string.h>
 
 int main(int arg_count, const char** args)
 {
-   if (arg_count != 2) {
-      printf("Usage: <file>");
+   if (arg_count == 1) {
+      return show_gui();
+   }
+   else if (arg_count != 2 or strcmp(args[1], "/?") == 0) {
+      printf("Usage: <file>\r\n");
 
       return 1;
    }
 
    const char* file_path = args[1];
 
-   exe_patcher editor;
-
-   if (not editor.load(file_path)) {
-      printf("Failed to open %s for patching.\n", file_path);
-
-      return 1;
-   }
-
-   bool found_compatible_list = false;
-
-   for (const exe_patch_list& exe_list : patch_lists) {
-      if (not editor.compatible(exe_list.id_address, exe_list.expected_id)) {
-
-         continue;
-      }
-
-      printf("Identified executable as: %s. Applying patches.\n", exe_list.name);
-
-      found_compatible_list = true;
-
-      for (const patch_set& set : exe_list.patches) {
-         printf("Applying patch set: %s\n", set.name);
-
-         for (const patch& patch : set.patches) {
-            if (not editor.apply(patch)) {
-               printf("Failed to apply patch. %s is unmodified.\n", file_path);
-
-               return 1;
-            }
-         }
-      }
-
-      break;
-   }
-
-   if (not found_compatible_list) {
-      printf("Couldn't identify executable. Unable to patch.\n");
-
-      return 1;
-   }
-
-   if (not editor.save(file_path)) {
-      printf("Failed to save %s after patching.\n", file_path);
-
-      return 1;
-   }
+   return apply(file_path, printf) ? 0 : 1;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

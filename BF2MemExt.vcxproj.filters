@@ -5,12 +5,16 @@
     <ClCompile Include="src\patch_table.cpp" />
     <ClCompile Include="src\exe_patcher.cpp" />
     <ClCompile Include="src\file_helpers.cpp" />
+    <ClCompile Include="src\gui.cpp" />
+    <ClCompile Include="src\apply_patches.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\patch_table.hpp" />
     <ClInclude Include="src\slim_vector.hpp" />
     <ClInclude Include="src\exe_patcher.hpp" />
     <ClInclude Include="src\file_helpers.hpp" />
+    <ClInclude Include="src\gui.hpp" />
+    <ClInclude Include="src\apply_patches.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="manifest.xml" />
