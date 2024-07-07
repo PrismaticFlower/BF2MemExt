@@ -70,7 +70,10 @@ bool exe_patcher::save(const char* file_path)
    result = true;
 
 cleanup:
-   if (temp_file_name) free(temp_file_name);
+   if (temp_file_name) {
+      remove(temp_file_name);
+      free(temp_file_name);
+   }
    if (file) fclose(file);
 
    return result;
