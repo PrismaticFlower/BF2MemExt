@@ -15,8 +15,15 @@
     <ClInclude Include="src\file_helpers.hpp" />
     <ClInclude Include="src\gui.hpp" />
     <ClInclude Include="src\apply_patches.hpp" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="manifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="BF2MemExt.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="BF2MemExt.ico" />
   </ItemGroup>
 </Project>

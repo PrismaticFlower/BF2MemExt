@@ -27,6 +27,7 @@
     <ClCompile Include="src\patch_table.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\apply_patches.hpp" />
     <ClInclude Include="src\exe_patcher.hpp" />
     <ClInclude Include="src\file_helpers.hpp" />
@@ -36,6 +37,12 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="manifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="BF2MemExt.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="BF2MemExt.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -89,6 +96,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>

@@ -1,3 +1,4 @@
+#include "../resource.h"
 #include "apply_patches.hpp"
 
 #include <stdio.h>
@@ -94,7 +95,7 @@ static auto RegisterWindowClass() noexcept -> ATOM
 {
    WNDCLASSEXW wcex;
 
-   HICON icon = nullptr; // LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WIN32UI));
+   HICON icon = LoadIconW(hInstance, MAKEINTRESOURCE(IDI_ICON));
 
    wcex.cbSize = sizeof(WNDCLASSEX);
 
