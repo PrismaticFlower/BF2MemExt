@@ -5,6 +5,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+static bool memeq(const void* left, size_t left_size, const void* right, size_t right_size)
+{
+   if (left_size != right_size) return false;
+
+   return memcmp(left, right, left_size) == 0;
+}
+
 exe_patcher::~exe_patcher()
 {
    if (_data) delete[] _data;
@@ -99,32 +106,24 @@ bool exe_patcher::apply(const patch& patch)
    const uint32_t offset = patch.address;
 
    // Bounds Checks
-   if (offset + patch.expected_bytes.size() >= _size) return false;
-   if (offset + patch.replacement_bytes.size() >= _size) return false;
+   if (offset + sizeof(uint32_t) >= _size) return false;
+   if (offset + sizeof(uint32_t) >= _size) return false;
 
    // Overflow Checks
-   if (offset + patch.expected_bytes.size() < offset) return false;
-   if (offset + patch.replacement_bytes.size() < offset) return false;
+   if (offset + sizeof(uint32_t) < offset) return false;
+   if (offset + sizeof(uint32_t) < offset) return false;
 
-   bool already_patched = true;
-
-   for (size_t i = 0; i < patch.replacement_bytes.size(); ++i) {
-      if (_data[offset + i] != patch.replacement_bytes[i]) {
-         already_patched = false;
-
-         break;
-      }
-   }
+   const bool already_patched = memeq(&_data[offset], sizeof(uint32_t), &patch.replacement_value,
+                                      sizeof(patch.replacement_value));
 
    if (already_patched) return true;
 
-   for (size_t i = 0; i < patch.expected_bytes.size(); ++i) {
-      if (_data[offset + i] != patch.expected_bytes[i]) return false;
-   }
+   const bool expected_value =
+      memeq(&_data[offset], sizeof(uint32_t), &patch.expected_value, sizeof(patch.expected_value));
 
-   for (size_t i = 0; i < patch.replacement_bytes.size(); ++i) {
-      _data[offset + i] = patch.replacement_bytes[i];
-   }
+   if (not expected_value) return false;
+
+   memcpy(&_data[offset], &patch.replacement_value, sizeof(uint32_t));
 
    return true;
 }

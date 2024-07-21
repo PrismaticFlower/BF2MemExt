@@ -9,8 +9,8 @@
 
 struct patch {
    uint32_t address = 0;
-   slim_vector<uint8_t> expected_bytes;
-   slim_vector<uint8_t> replacement_bytes;
+   uint32_t expected_value = 0;
+   uint32_t replacement_value = 0;
 };
 
 struct patch_set {

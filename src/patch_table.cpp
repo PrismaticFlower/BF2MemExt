@@ -11,8 +11,8 @@ const exe_patch_list patch_lists[EXE_COUNT] = {
                .name = "RedMemory Heap Extensions",
                .patches =
                   {
-                     patch{0x337921, {0x00, 0x00, 0x00, 0x04}, {0x00, 0x00, 0x00, 0x10}}, // malloc call arg
-                     patch{0x33792c, {0x00, 0x00, 0x00, 0x04}, {0x00, 0x00, 0x00, 0x10}}, // malloc'd block end pointer
+                     patch{0x337921, 0x4000000, 0x10000000}, // malloc call arg
+                     patch{0x33792c, 0x4000000, 0x10000000}, // malloc'd block end pointer
                   },
             },
 
@@ -20,7 +20,7 @@ const exe_patch_list patch_lists[EXE_COUNT] = {
                .name = "SoundParameterized Layer Limit Extension",
                .patches =
                   {
-                     patch{0x6227c2, {0xa0, 0x00, 0x00, 0x00}, {0x00, 0x20, 0x00, 0x00}},
+                     patch{0x6227c2, 0xa0, 0x2000},
                   },
             },
          },
@@ -36,8 +36,8 @@ const exe_patch_list patch_lists[EXE_COUNT] = {
                .name = "RedMemory Heap Extensions",
                .patches =
                   {
-                     patch{0x217651, {0x00, 0x00, 0x00, 0x04}, {0x00, 0x00, 0x00, 0x10}}, // malloc call arg
-                     patch{0x217667, {0x00, 0x00, 0x00, 0x04}, {0x00, 0x00, 0x00, 0x10}}, // malloc'd block end pointer
+                     patch{0x217651, 0x4000000, 0x10000000}, // malloc call arg
+                     patch{0x217667, 0x4000000, 0x10000000}, // malloc'd block end pointer
                   },
             },
 
@@ -45,7 +45,7 @@ const exe_patch_list patch_lists[EXE_COUNT] = {
                .name = "SoundParameterized Layer Limit Extension",
                .patches =
                   {
-                     patch{0x3e310c, {0xa0, 0x00, 0x00, 0x00}, {0x00, 0x20, 0x00, 0x00}},
+                     patch{0x3e310c, 0xa0, 0x2000},
                   },
             },
          },
@@ -61,8 +61,8 @@ const exe_patch_list patch_lists[EXE_COUNT] = {
                .name = "RedMemory Heap Extensions",
                .patches =
                   {
-                     patch{0x2165b1, {0x00, 0x00, 0x00, 0x04}, {0x00, 0x00, 0x00, 0x10}}, // malloc call arg
-                     patch{0x2165c7, {0x00, 0x00, 0x00, 0x04}, {0x00, 0x00, 0x00, 0x10}}, // malloc'd block end pointer
+                     patch{0x2165b1, 0x4000000, 0x10000000}, // malloc call arg
+                     patch{0x2165c7, 0x4000000, 0x10000000}, // malloc'd block end pointer
                   },
             },
 
@@ -70,7 +70,7 @@ const exe_patch_list patch_lists[EXE_COUNT] = {
                .name = "SoundParameterized Layer Limit Extension",
                .patches =
                   {
-                     patch{0x3e170c, {0xa0, 0x00, 0x00, 0x00}, {0x00, 0x20, 0x00, 0x00}},
+                     patch{0x3e170c, 0xa0, 0x2000},
                   },
             },
          },
