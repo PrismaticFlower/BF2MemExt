@@ -211,13 +211,7 @@ bool exe_patcher::apply(const patch& patch)
 
    const uint32_t offset = patch.address;
 
-   // Bounds Checks
-   if (offset + sizeof(uint32_t) >= _size) return false;
-   if (offset + sizeof(uint32_t) >= _size) return false;
-
-   // Overflow Checks
-   if (offset + sizeof(uint32_t) < offset) return false;
-   if (offset + sizeof(uint32_t) < offset) return false;
+   if (not check_range(offset, sizeof(uint32_t))) return false;
 
    const bool already_patched = memeq(&_data[offset], sizeof(uint32_t), &patch.replacement_value,
                                       sizeof(patch.replacement_value));
