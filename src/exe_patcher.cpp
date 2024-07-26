@@ -150,9 +150,9 @@ bool exe_patcher::prepare(uint32_t ext_section_size)
             return false;
          }
 
-         if (i == file_header->NumberOfSections - 1) return false;
+         if (i != file_header->NumberOfSections - 1) return false;
 
-         _ext_section_va = section_headers[i].VirtualAddress;
+         _ext_section_va = optional_header->ImageBase + section_headers[i].VirtualAddress;
 
          if (section_headers[i].Misc.VirtualSize < ext_section_size) {
             optional_header->SizeOfUninitializedData -= section_headers[i].Misc.VirtualSize;
@@ -200,7 +200,7 @@ bool exe_patcher::prepare(uint32_t ext_section_size)
    optional_header->SizeOfImage += new_section->Misc.VirtualSize;
    optional_header->SizeOfUninitializedData += new_section->Misc.VirtualSize;
 
-   _ext_section_va = new_section->Misc.VirtualSize;
+   _ext_section_va = optional_header->ImageBase + new_section->VirtualAddress;
 
    return true;
 }
