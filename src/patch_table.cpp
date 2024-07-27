@@ -1,5 +1,19 @@
 #include "patch_table.hpp"
 
+const static uint32_t DLC_mission_size = 0x110;
+const static uint32_t DLC_mission_patch_limit = 0x1000;
+
+enum es_layout : uint32_t {
+   ES_DLC_START = 0,
+   ES_DLC_END = ES_DLC_START + (DLC_mission_size * DLC_mission_patch_limit),
+
+   ES_END = ES_DLC_END
+};
+
+// Function names matched from BF1 Mac executable. Could be wrong in cases.
+
+// clang-format off
+
 const exe_patch_list patch_lists[EXE_COUNT] = {
    exe_patch_list{
       .name = "BF2_modtools",
@@ -23,9 +37,26 @@ const exe_patch_list patch_lists[EXE_COUNT] = {
                      patch{0x6227c2, 0xa0, 0x2000},
                   },
             },
+
+            patch_set{
+               .name = "DLC Mission Limit Extension",
+               .patches =
+                  {
+                     patch{0x4935c, 0xb08308, ES_DLC_START, true},                         // SetCurrentMap
+                     patch{0x493ac, 0xb0830c, (0xb0830c - 0xb08308) + ES_DLC_START, true}, // SetCurrentMission
+                     patch{0x49415, 0xb08310, (0xb08310 - 0xb08308) + ES_DLC_START, true}, // GetContentDirectory
+                     patch{0x49472, 0xb0830c, (0xb0830c - 0xb08308) + ES_DLC_START, true}, // IsMissionDownloaded
+                     patch{0x494fb, 0x1f4, DLC_mission_patch_limit, true},                 // AddDownloadableContent
+                     patch{0x4951f, 0xb08308, ES_DLC_START, true},                         // AddDownloadableContent
+                     patch{0x49542, 0xb0830c, (0xb0830c - 0xb08308) + ES_DLC_START, true}, // AddDownloadableContent
+                     patch{0x49548, 0xb08310, (0xb08310 - 0xb08308) + ES_DLC_START, true}, // AddDownloadableContent
+                     patch{0x49571, 0xb08413, (0xb08413 - 0xb08308) + ES_DLC_START, true}, // AddDownloadableContent
+                     patch{0x4957d, 0xb08414, (0xb08414 - 0xb08308) + ES_DLC_START, true}, // AddDownloadableContent
+                  },
+            },
          },
    },
-
+   
    exe_patch_list{
       .name = "BattlefrontII.exe GoG",
       .id_address = 0x39f298,
@@ -46,6 +77,23 @@ const exe_patch_list patch_lists[EXE_COUNT] = {
                .patches =
                   {
                      patch{0x3e310c, 0xa0, 0x2000},
+                  },
+            },
+
+            patch_set{
+               .name = "DLC Mission Limit Extension",
+               .patches =
+                  {
+                     patch{0x8de7d, 0x1f4, DLC_mission_patch_limit, true},                    // AddDownloadableContent
+                     patch{0x8de9f, 0x1e31f00, ES_DLC_START, true},                           // AddDownloadableContent
+                     patch{0x8dec3, 0x1e31f04, (0x1e31f04 - 0x1e31f00) + ES_DLC_START, true}, // AddDownloadableContent
+                     patch{0x8dec9, 0x1e31f08, (0x1e31f08 - 0x1e31f00) + ES_DLC_START, true}, // AddDownloadableContent
+                     patch{0x8def0, 0x1e3200b, (0x1e3200b - 0x1e31f00) + ES_DLC_START, true}, // AddDownloadableContent
+                     patch{0x8def7, 0x1e3200c, (0x1e3200c - 0x1e31f00) + ES_DLC_START, true}, // AddDownloadableContent
+                     patch{0x8df28, 0x1e31f00, ES_DLC_START, true},                           // SetCurrentMap
+                     patch{0x8df68, 0x1e31f04, (0x1e31f04 - 0x1e31f00) + ES_DLC_START, true}, // SetCurrentMission
+                     patch{0x8dfb4, 0x1e31f08, (0x1e31f08 - 0x1e31f00) + ES_DLC_START, true}, // GetContentDirectory
+                     patch{0x8dfce, 0x1e31f04, (0x1e31f04 - 0x1e31f00) + ES_DLC_START, true}, // IsMissionDownloaded
                   },
             },
          },
@@ -73,7 +121,25 @@ const exe_patch_list patch_lists[EXE_COUNT] = {
                      patch{0x3e170c, 0xa0, 0x2000},
                   },
             },
+
+            patch_set{
+               .name = "DLC Mission Limit Extension",
+               .patches =
+                  {
+                     patch{0x8de7d, 0x1f4, DLC_mission_patch_limit, true},                    // AddDownloadableContent
+                     patch{0x8de9f, 0x1e30950, ES_DLC_START, true},                           // AddDownloadableContent
+                     patch{0x8dec3, 0x1e30954, (0x1e30954 - 0x1e30950) + ES_DLC_START, true}, // AddDownloadableContent
+                     patch{0x8dec9, 0x1e30958, (0x1e30958 - 0x1e30950) + ES_DLC_START, true}, // AddDownloadableContent
+                     patch{0x8def0, 0x1e30a5b, (0x1e30a5b - 0x1e30950) + ES_DLC_START, true}, // AddDownloadableContent
+                     patch{0x8def7, 0x1e30a5c, (0x1e30a5c - 0x1e30950) + ES_DLC_START, true}, // AddDownloadableContent
+                     patch{0x8df28, 0x1e30950, ES_DLC_START, true},                           // SetCurrentMap
+                     patch{0x8df68, 0x1e30954, (0x1e30954 - 0x1e30950) + ES_DLC_START, true}, // SetCurrentMission
+                     patch{0x8dfb4, 0x1e30958, (0x1e30958 - 0x1e30950) + ES_DLC_START, true}, // GetContentDirectory
+                     patch{0x8dfce, 0x1e30954, (0x1e30954 - 0x1e30950) + ES_DLC_START, true}, // IsMissionDownloaded
+                  },
+            },
          },
    },
-
 };
+
+extern const uint32_t ext_section_size = ES_END;

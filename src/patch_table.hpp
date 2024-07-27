@@ -4,13 +4,14 @@
 
 #include "slim_vector.hpp"
 
-#define PATCH_COUNT 2
+#define PATCH_COUNT 3
 #define EXE_COUNT 3
 
 struct patch {
    uint32_t address = 0;
    uint32_t expected_value = 0;
    uint32_t replacement_value = 0;
+   bool value_is_ext_section_relative_address = false;
 };
 
 struct patch_set {
@@ -27,3 +28,4 @@ struct exe_patch_list {
 };
 
 extern const exe_patch_list patch_lists[EXE_COUNT];
+extern const uint32_t ext_section_size;

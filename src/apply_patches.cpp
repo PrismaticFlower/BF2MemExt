@@ -26,7 +26,7 @@ bool apply(const char* file_path, int (*print)(const char* format, ...)) noexcep
 
       print("Identified executable as: %s. Applying patches.\r\n", exe_list.name);
 
-      if (not editor.prepare(0x1000)) {
+      if (not editor.prepare(ext_section_size)) {
          print("Failed add new executable section for patch data. %s is unmodified.\r\n", file_path);
 
          return false;

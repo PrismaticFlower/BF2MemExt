@@ -213,8 +213,12 @@ bool exe_patcher::apply(const patch& patch)
 
    if (not check_range(offset, sizeof(uint32_t))) return false;
 
-   const bool already_patched = memeq(&_data[offset], sizeof(uint32_t), &patch.replacement_value,
-                                      sizeof(patch.replacement_value));
+   uint32_t replacement_value = patch.replacement_value;
+
+   if (patch.value_is_ext_section_relative_address) replacement_value += _ext_section_va;
+
+   const bool already_patched =
+      memeq(&_data[offset], sizeof(uint32_t), &replacement_value, sizeof(replacement_value));
 
    if (already_patched) return true;
 
@@ -223,7 +227,7 @@ bool exe_patcher::apply(const patch& patch)
 
    if (not expected_value) return false;
 
-   memcpy(&_data[offset], &patch.replacement_value, sizeof(uint32_t));
+   memcpy(&_data[offset], &replacement_value, sizeof(replacement_value));
 
    return true;
 }
