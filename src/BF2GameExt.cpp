@@ -1,4 +1,4 @@
-// BF2MemExt.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// BF2GameExt.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include "apply_patches.hpp"

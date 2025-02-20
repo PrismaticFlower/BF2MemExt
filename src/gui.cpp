@@ -25,7 +25,7 @@ static const SystemParametersInfoForDpiProc systemParametersInfoForDpi =
    reinterpret_cast<SystemParametersInfoForDpiProc>(
       GetProcAddress(LoadLibraryW(L"User32.dll"), "SystemParametersInfoForDpi"));
 
-static const wchar_t className[] = L"BF2MemExt";
+static const wchar_t className[] = L"BF2GameExt";
 
 static const HINSTANCE hInstance = GetModuleHandle(nullptr);
 static HWND hwndMain;
@@ -116,7 +116,7 @@ static auto RegisterWindowClass() noexcept -> ATOM
 
 static bool InitWindows() noexcept
 {
-   hwndMain = CreateWindowExW(0, className, L"BF2 Memory Extender", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT,
+   hwndMain = CreateWindowExW(0, className, L"BF2 Game Extender", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT,
                               CW_USEDEFAULT, 440, 256, nullptr, nullptr, hInstance, nullptr);
 
    if (not hwndMain) return false;
