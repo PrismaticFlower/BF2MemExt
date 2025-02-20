@@ -22,8 +22,6 @@ struct patch {
    patch_flags flags = {};
 };
 
-struct patch_variant {};
-
 struct patch_set {
    const char* name = "";
    slim_vector<patch> patches;
