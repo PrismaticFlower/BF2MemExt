@@ -12,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\apply_patches.cpp" />
-    <ClCompile Include="src\BF2MemExt.cpp" />
+    <ClCompile Include="src\BF2GameExt.cpp" />
     <ClCompile Include="src\exe_patcher.cpp" />
     <ClCompile Include="src\file_helpers.cpp" />
     <ClCompile Include="src\gui.cpp" />
@@ -30,10 +30,10 @@
     <Xml Include="manifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="BF2MemExt.rc" />
+    <ResourceCompile Include="BF2GameExt.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="BF2MemExt.ico" />
+    <Image Include="BF2GameExt.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Detours\Detours.vcxproj">
@@ -44,7 +44,7 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{518f8cd4-77f3-4cb1-ac58-2160d5e2730f}</ProjectGuid>
-    <RootNamespace>BF2MemExt</RootNamespace>
+    <RootNamespace>BF2GameExt</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
