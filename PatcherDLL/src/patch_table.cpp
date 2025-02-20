@@ -6,7 +6,7 @@ const static uint32_t DLC_mission_size = 0x110;
 const static uint32_t DLC_mission_patch_limit = 0x1000;
 
 static char DLC_mission_table_storage[DLC_mission_size * DLC_mission_patch_limit] = {};
-static uint32_t DLC_mission_table_address = (uint32_t)&DLC_mission_table_storage[0];
+static const uint32_t DLC_mission_table_address = (uint32_t)&DLC_mission_table_storage[0];
 
 // Function names matched from BF1 Mac executable. Could be wrong in cases.
 
