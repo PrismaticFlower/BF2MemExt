@@ -6,15 +6,20 @@
 
 template<typename T>
 struct slim_vector {
+   struct alloc_tag {};
+
    slim_vector() = default;
 
-   slim_vector(std::initializer_list<T> objects)
+   slim_vector(size_t size, alloc_tag)
    {
-      _size = objects.size();
+      _size = size;
       _data = new T[_size];
 
       if (not _data) abort();
+   }
 
+   slim_vector(std::initializer_list<T> objects) : slim_vector{objects.size(), alloc_tag{}}
+   {
       for (size_t i = 0; i < _size; ++i) _data[i] = *(objects.begin() + i);
    }
 
@@ -55,6 +60,13 @@ struct slim_vector {
    [[nodiscard]] auto size() const noexcept -> size_t
    {
       return _size;
+   }
+
+   [[nodiscard]] auto operator[](size_t i) noexcept -> T&
+   {
+      if (not _data or i >= _size) abort();
+
+      return _data[i];
    }
 
    [[nodiscard]] auto operator[](size_t i) const noexcept -> const T&

@@ -1,12 +1,21 @@
+#include "compatibility_list.hpp"
 #include "exe_patcher.hpp"
-#include "patch_table.hpp"
+#include "file_helpers.hpp"
 
 #include <stdio.h>
 #include <string.h>
 
+const char* PATCH_DLL_NAME = "BF2GameExt.dll";
+
 bool apply(const char* file_path, int (*print)(const char* format, ...)) noexcept
 {
    if (not print) print = printf;
+
+   if (not file_exists(PATCH_DLL_NAME)) {
+      print("%s is missing. Patching depends on this file and can't not work without.\r\n", PATCH_DLL_NAME);
+
+      return false;
+   }
 
    exe_patcher editor;
 
@@ -16,50 +25,50 @@ bool apply(const char* file_path, int (*print)(const char* format, ...)) noexcep
       return false;
    }
 
-   bool found_compatible_list = false;
+   bool is_compatible = false;
 
-   for (const exe_patch_list& exe_list : patch_lists) {
-      if (not editor.compatible(exe_list.id_address, exe_list.expected_id)) {
+   for (const compatibile_exe& exe : compatibility_list) {
+      if (not editor.compatible(exe.id_address, exe.expected_id)) {
 
          continue;
       }
 
-      print("Identified executable as: %s. Applying patches.\r\n", exe_list.name);
+      print("Identified executable as: %s. Applying patches.\r\n", exe.name);
 
-      if (not editor.prepare(ext_section_size)) {
-         print("Failed add new executable section for patch data. %s is unmodified.\r\n", file_path);
-
-         return false;
-      }
-
-      found_compatible_list = true;
-
-      for (const patch_set& set : exe_list.patches) {
-         print("Applying patch set: %s\r\n", set.name);
-
-         for (const patch& patch : set.patches) {
-            if (not editor.apply(patch)) {
-               print("Failed to apply patch. %s is unmodified.\r\n", file_path);
-
-               return false;
-            }
-         }
-      }
+      is_compatible = true;
 
       break;
    }
 
-   if (not found_compatible_list) {
+   if (not is_compatible) {
       print("Couldn't identify executable. Unable to patch.\r\n");
 
       return false;
    }
+
+   if (not editor.add_dll(PATCH_DLL_NAME)) {
+      print("Failed to add DLL import to executable.\r\n");
+
+      return false;
+   }
+
+   print("Copying %s to game directory.\r\n", PATCH_DLL_NAME);
+
+   if (not copy_next_to(PATCH_DLL_NAME, file_path)) {
+      print("Failed to copy patch DLL (%s) to game directory.\r\n", PATCH_DLL_NAME);
+
+      return false;
+   }
+
+   print("Saving patched game executable.\r\n");
 
    if (not editor.save(file_path)) {
       print("Failed to save %s after patching.\r\n", file_path);
 
       return false;
    }
+
+   print("Patching succeeded.\r\n");
 
    return true;
 }

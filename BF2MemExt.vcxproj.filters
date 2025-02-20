@@ -2,20 +2,19 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\BF2MemExt.cpp" />
-    <ClCompile Include="src\patch_table.cpp" />
     <ClCompile Include="src\exe_patcher.cpp" />
     <ClCompile Include="src\file_helpers.cpp" />
     <ClCompile Include="src\gui.cpp" />
     <ClCompile Include="src\apply_patches.cpp" />
+    <ClCompile Include="src\compatibility_list.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\patch_table.hpp" />
-    <ClInclude Include="src\slim_vector.hpp" />
     <ClInclude Include="src\exe_patcher.hpp" />
     <ClInclude Include="src\file_helpers.hpp" />
     <ClInclude Include="src\gui.hpp" />
-    <ClInclude Include="src\apply_patches.hpp" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="src\apply_patches.hpp" />
+    <ClInclude Include="src\compatibility_list.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="manifest.xml" />

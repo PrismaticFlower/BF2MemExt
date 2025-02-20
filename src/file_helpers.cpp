@@ -54,6 +54,49 @@
    return MoveFileExA(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED) != 0;
 }
 
+bool copy_next_to(const char* src_file, const char* dest_file_name)
+{
+   const char* backslash = strrchr(dest_file_name, '\\');
+   const char* forwardslash = strrchr(dest_file_name, '/');
+
+   if (not backslash and not forwardslash) {
+      return CopyFileA(src_file, "", false) != 0;
+   }
+
+   const ptrdiff_t backslash_distance = backslash ? backslash - dest_file_name : PTRDIFF_MIN;
+   const ptrdiff_t forwardslash_distance = forwardslash ? forwardslash - dest_file_name : PTRDIFF_MIN;
+
+   const char* slash = backslash_distance > forwardslash_distance ? backslash : forwardslash;
+
+   const size_t directory_size = slash - dest_file_name;
+   const size_t src_file_size = strlen(src_file);
+   const size_t dest_path_size = directory_size + src_file_size + 1;
+   char* dest_path = (char*)malloc(dest_path_size + 1);
+
+   if (not dest_path) return false;
+
+   memcpy(dest_path, dest_file_name, directory_size);
+
+   dest_path[directory_size] = '\\';
+
+   memcpy(dest_path + directory_size + 1, src_file, src_file_size);
+
+   dest_path[dest_path_size] = '\0';
+
+   char temp_file_name[MAX_PATH] = {};
+
+   const bool result = CopyFileA(src_file, dest_path, false);
+
+   free(dest_path);
+
+   return result;
+}
+
+bool file_exists(const char* file)
+{
+   return GetFileAttributesA(file) != INVALID_FILE_ATTRIBUTES;
+}
+
 void init_cstdio()
 {
    if (not AttachConsole(ATTACH_PARENT_PROCESS)) return;
