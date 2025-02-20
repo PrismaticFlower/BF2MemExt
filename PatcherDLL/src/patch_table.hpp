@@ -11,7 +11,7 @@ struct patch_flags {
    /// @brief Address represents a file offset instead of a virtual an unrelocated virtual address.
    bool file_offset : 1 = false;
 
-   /// expected_value is an unrelocated virtual address (what would be displayed in tools like
+   /// expected_value is an unrelocated virtual address (what would be displayed in tools like Ghidra/IDA)
    bool expected_is_va : 1 = false;
 };
 
